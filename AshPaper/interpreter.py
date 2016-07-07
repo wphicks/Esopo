@@ -1,6 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import sys
 import re
+import logging
 from nltk.corpus import cmudict
 
 PRON_DICT = cmudict.dict()
@@ -9,6 +10,11 @@ INT_CAP_RE = re.compile(r"\b\S+[A-Z]\S+\b")
 CAP_RE = re.compile(r"\b[A-Z][^A-Z]+\b")
 SIMILE_RE = re.compile(r"\b(like|as)\b")
 START_WS_RE = re.compile(r"^\s")
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 
 
 def count_syllables(word):
@@ -121,9 +127,7 @@ class AshPaper(object):
         self.instruction_index = 0
 
     def execute(self):
-        #print self.registers, self.stack
         instruction = self.instructions[self.instruction_index]
-        #print instruction.line
         if check_rhyme(self.previous_instruction.rhymes, instruction.rhymes):
             if self.registers[0] < self.registers[1]:
                 self.stack.append(self.previous_instruction.syllables)
@@ -166,11 +170,11 @@ class AshPaper(object):
                     len(self.instructions))
                 self.execute()
                 return
-        #print instruction.line, self.registers[0], self.registers[1],\
-        #    self.stack
-        # print "{}{}|   {}   |   {}   |   {}   |".format(
-        #    instruction.line, " "*(51-len(instruction.line)),
-        #    self.registers[0], self.registers[1], self.stack)
+        logging.debug(
+            "{}{}|   {}   |   {}   |   {}   |".format(
+                instruction.line, " " * (51 - len(instruction.line)),
+                self.registers[0], self.registers[1], self.stack)
+        )
         self.instruction_index += 1
         self.previous_instruction = instruction
 
@@ -185,6 +189,3 @@ if __name__ == "__main__":
     machine = AshPaper()
     machine.compile(sys.argv[1])
     machine.run()
-    #print("\n\nEnd run report:")
-    #print("\tRegisters: {}".format(machine.registers))
-    #print("\tStack: {}".format(machine.stack))
