@@ -2,9 +2,8 @@ LANGUAGE SPECIFICATIONS
 _______________________________________________________________________________
 MEMORY
 This language makes use of two registers (register 0 and register 1),
-each of which can store one signed integer of a size determined by system
-architecture. It also makes use of a stack of unlimited size, which can also
-store signed integers.
+each of which can store one signed integer. It also makes use of a stack of
+unlimited size, which can also store signed integers.
 
 
 INSTRUCTIONS
