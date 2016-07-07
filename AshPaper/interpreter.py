@@ -2,6 +2,7 @@
 import sys
 import re
 import logging
+import argparse
 from nltk.corpus import cmudict
 
 PRON_DICT = cmudict.dict()
@@ -186,6 +187,13 @@ class AshPaper(object):
         self.previous_instruction = AshPaperLine("")
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-d", "--debug", help="print debug information", action="store_true")
+    parser.add_argument("eso_file")
+    args = parser.parse_args()
+    if args.debug:
+        logging.getLogger().setLevel(logging.DEBUG)
     machine = AshPaper()
-    machine.compile(sys.argv[1])
+    machine.compile(args.eso_file)
     machine.run()
