@@ -1,0 +1,73 @@
+DESCRIPTION
+_______________________________________________________________________________
+Correspond is a language in which programs are written as a series of letters
+(correspondence).
+
+
+LANGUAGE SPECIFICATIONS
+_______________________________________________________________________________
+MEMORY
+This language makes use of two registers (R_ME and R_YOU), each of which can
+store one signed integer. It also makes use of two stacks (S0 and S1) of
+unlimited size, which can also store signed integers. Popping an empty stack
+will return 0, and registers have initial value 0.
+
+INSTRUCTIONS
+Every "letter" comprising a complete program (hereafter referred to as a
+correspondence) begins with a salutation "Dear SUBROUTINE" where SUBROUTINE is
+any name which has not already been used to label another subroutine. Once this
+name is introduced in a salutation, it can henceforward be invoked as a keyword
+to call that subroutine in any subsequent letter.
+
+All correspondence must end with the reserved "Dear You" subroutine, which acts
+as the "main" method to initiate execution. 
+
+The following are the available built-in instructions for the language.
+Built-in instructions are numbered, and can be invoked using their indices as
+indicated in instructions 2 and 9.  In case the same token is used to reference
+two instructions, the lower index instruction is executed first and then
+declared subroutines in their order of declaration.
+
+0. I/me: If either of these keywords appear, make R_ME the active register.
+1. you: If this keyword appears, make R_YOU the active register.
+2. we/us: If either of these keywords appear, check if R_ME == R_YOU. If so,
+execute instruction with index equal to value in active register modulo the
+number of indexed instructions.
+3. Past tense verb: Switch active stack.
+4. ?: Pop active stack to active register
+5. .: Push active register to active stack
+6. word: : Any word followed immediately by a colon becomes an alias within
+that subroutine for all remaining instructions in that sentence (including end
+punctuation.
+7. ': Decrement the active register
+8. -: Increment the active register
+9. !: Pop every element in the stack, executing the corresponding instruction
+as indicated in instruction 2.
+10. and: Add R_YOU to R_Me and store the result in the active register
+11. or: Subtract the non-active register from the active register and store in
+the active register
+
+Finally, letter closings also have specific meanings:
+
+Love: Re-execute this subroutine if R_YOU == R_ME
+
+Sincerely: Print the value at the top of the active stack.
+
+Regards: Print the value of the active register.
+
+Always: Re-execute this subroutine if active register is positive.
+
+
+EXAMPLE
+_______________________________________________________________________________
+The following example is a subroutine which multiplies the values in R_YOU and
+R_ME, adding the result to the value at the top of the stack:
+
+Dear Reader,
+
+    I do not expect a reply. What did I describe last? Sand and dust on a white
+table. Who would have responded to that? I can't even remember why I wrote
+about it. Does it still matter?
+
+Always,
+Your Writer
