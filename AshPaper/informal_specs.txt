@@ -31,6 +31,8 @@ register
 8. "," appears in line: Pop stack and store in active register
 9. "-" appears in line: Push value of active register to stack
 10. Alliteration in consecutive words: Goto line indicated by active register
+11. Blank line: no-op
+12. Anything else: Store the number of syllables to the active register
 
 
 
