@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html data-ng-app="AshPaperApp">
+<head>
+    <meta charset="UTF-8">
+    <title>AshPaper</title>
+</head>
+<body>
+    <div data-ng-controller="AshPaperController">
+        <div class="column" id="source">
+            <textarea data-ng-model="sourceCode">
+            </textarea>
+            <button data-ng-click="evaluate();">Run</button>
+        </div>
+        <div class="column" id="output">
+            <div class="outputline" data-ng-repeat="outLine in output">
+            <div>
+        </div>
+    </div>
+<script src="bundle.js"></script>
+</body>
+</html>
+
