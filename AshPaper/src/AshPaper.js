@@ -1,13 +1,32 @@
-var NLP = require('nlp_compromise');
-NLP.plugin(require('nlp-syllables'));
-
 (function(exports) {
     "use strict";
     exports.count_syllables = function(string) {
-        var syllables = NLP.term(string).syllables();
-        return syllables.map(
-                function(word) {return word.length;}).reduce(
-                function(prev, cur) {return prev + cur;}, 0);
+        var diphthongs = [
+            "ai", "au", "ay", "ea", "ee", "ei", "ey", "oa", "oe", "oi", "oo",
+            "ou", "oy", "ua", "ue", "ui"
+        ];
+        var syllables = 0;
+        string = string.toLowerCase();
+        var words = string.split(/\s+/).filter(
+            function(cluster) {return cluster.length !== 0;}
+        );
+        for (var i=0; i < words.length; i++) {
+            var word = words[i].replace(/e$/, "");
+            word = word.replace(/[^a-zA-Z]/, "");
+            var vowel_clusters = word.split(/[^aeiouy]+/).filter(
+                function(cluster) {return cluster.length !== 0;}
+            );
+            var word_syllables = 0;
+            for (var j=0; j < vowel_clusters.length; j++){
+                if (diphthongs.indexOf(vowel_clusters[j]) >= 0){
+                    word_syllables += 1;
+                } else {
+                    word_syllables += Math.min(2, vowel_clusters[j].length);
+                }
+            }
+            syllables += Math.max(word_syllables, 1);
+        }
+        return syllables;
     };
 
     exports.choose_register = function(string) {
@@ -27,7 +46,7 @@ NLP.plugin(require('nlp-syllables'));
         pop:
             function(){
                 if (this._values.length === 0) {
-                    return 0;
+                    return null;
                 }
                 return this._values.pop();
             },
@@ -116,7 +135,10 @@ NLP.plugin(require('nlp-syllables'));
                         this.output += this.registers[register_index];
                         break;
                     case "POP":
-                        this.registers[register_index] = this.stack.pop();
+                        var new_value = this.stack.pop();
+                        if (new_value !== null) {
+                            this.registers[register_index] = new_value;
+                        }
                         break;
                     case "PUSH":
                         this.stack.push(this.registers[register_index]);

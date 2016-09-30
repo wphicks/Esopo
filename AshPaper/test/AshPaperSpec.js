@@ -2,14 +2,14 @@ var AshPaper = require('../src/AshPaper').AshPaper;
 describe("The AshPaper count_syllables function", function(){
     it("counts the syllables in a string", function(){
         expect(
-            AshPaper.count_syllables("other woodwork")
-        ).toEqual(4);
+            AshPaper.count_syllables("on either side the river lie")
+        ).toEqual(8);
     });
 });
 
 describe("The AshPaper choose_register function", function(){
     it("returns 1 if a line begins with whitespace, otherwise 0", function(){
-        expect(AshPaper.choose_register("other woodwork")).toEqual(0);
+        expect(AshPaper.choose_register("other woodwork")).toBe(0);
         expect(AshPaper.choose_register(" other woodwork")).toEqual(1);
     });
 });
@@ -23,12 +23,12 @@ describe("The AshPaper Program", function(){
         expect(program.output).toEqual("");
     });
     it("is initialized with 0 in each register", function(){
-        expect(program.registers[0]).toEqual(0);
-        expect(program.registers[1]).toEqual(0);
+        expect(program.registers[0]).toBe(0);
+        expect(program.registers[1]).toBe(0);
     });
 
-    it("returns 0 from an empty stack", function(){
-        expect(program.stack.pop()).toEqual(0);
+    it("returns null from an empty stack", function(){
+        expect(program.stack.pop()).toBe(null);
     });
 
     it("executes STORE by storing the number of syllables in the active " +
@@ -127,7 +127,7 @@ describe("The AshPaper Program", function(){
         ];
         program = new AshPaper.Program(instructions);
         program.execute();
-        expect(program.registers[0]).toEqual(0);
+        expect(program.registers[0]).toEqual(65);
     });
     it("executes PUSH by pushing the active register to the stack", function(){
         var instructions = [
@@ -149,7 +149,7 @@ describe("The AshPaper Program", function(){
         program = new AshPaper.Program(instructions);
         program.execute();
         expect(program.registers[0]).toEqual(2);
-        expect(program.registers[1]).toEqual(0);
+        expect(program.registers[1]).toBe(0);
     });
     it("executes NOOP by doing nothing", function(){
         var instructions = [
@@ -157,9 +157,9 @@ describe("The AshPaper Program", function(){
         ];
         program = new AshPaper.Program(instructions);
         program.execute();
-        expect(program.registers[0]).toEqual(0);
-        expect(program.registers[1]).toEqual(0);
-        expect(program.stack.pop()).toEqual(0);
+        expect(program.registers[0]).toBe(0);
+        expect(program.registers[1]).toBe(0);
+        expect(program.stack.pop()).toBe(null);
     });
 });
 
