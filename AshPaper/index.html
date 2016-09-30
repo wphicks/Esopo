@@ -1,19 +1,38 @@
 <!DOCTYPE html>
-<html data-ng-app="AshPaperApp">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>AshPaper</title>
+    <link rel="stylesheet" type="text/css" href="ashpaper.css">
 </head>
 <body>
-    <div data-ng-controller="AshPaperController">
+    <div class="container">
         <div class="column" id="source">
-            <textarea data-ng-model="sourceCode">
-            </textarea>
-            <button data-ng-click="evaluate();">Run</button>
+            <div>
+                <textarea id="sourceCode">
+other woodwork
+    like a folding
+   up, a
+  branch-work growth
+              of
+      AshPaper trees come together
+as we demand
+      perfect edges, impossible creases
+  a Scream of roots
+    toe-curled
+    inward
+gro(w/a)n
+    past lines of pebbles, into wellstones
+                              cracked. broken.
+perfect edges impossibly creased
+what's left of that?
+                </textarea>
+            </div>
+            <div>
+                <button onclick="runProgram()">Run</button>
+            </div>
         </div>
         <div class="column" id="output">
-            <div class="outputline" data-ng-repeat="outLine in output">
-            <div>
         </div>
     </div>
 <script src="bundle.js"></script>

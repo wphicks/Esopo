@@ -66,7 +66,10 @@ NLP.plugin(require('nlp-syllables'));
             },
         execute_to:
             function(line_number){
+                this.registers = [0, 0];
+                this.stack = new exports.Stack();
                 this.execution_index = 0;
+                this.output = "";
                 while(this.execution_index < line_number &&
                         this.execution_index < this.instructions.length){
                     this.execute_line(this.execution_index);
@@ -137,6 +140,15 @@ NLP.plugin(require('nlp-syllables'));
         }
     };
     exports.Interpreter.prototype = {
+        interpret:
+            function(string) {
+                var instructions = [];
+                var lines = string.split(/\r?\n/);
+                for (var i=0; i < lines.length; i++){
+                    instructions.push(this.interpret_line(lines[i]));
+                }
+                return exports.Program(instructions);
+            },
         interpret_line:
             function(line) {
                 var syllables = exports.count_syllables(line);
